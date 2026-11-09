@@ -1,0 +1,16 @@
+SEGMENTAÇÃO
+Projeto 1
+
+Comentar sobre:
+- Como permitir espaço no cálculo faz a versão "5D_k3" unir mais frequentemente o coração dentro da maçã, pois tem tendência
+a agrupar pixeis próximos
+- Os valor de k considerando fundo como objeto
+- Comentar sobre as dificuldades da inicialização em k-means, e como escolher centroides iniciais aleatoriamente afeta
+significativamente o resultado final
+- Testes com centroides equivalentes em 3D e 5D
+
+
+
+SEGMENTAÇÃO
+Projeto 2
+
