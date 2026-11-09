@@ -11,31 +11,25 @@ if not os.path.exists(OutputPath):
 
 
 # Functions For Skin Based Thresholding 
-# def RGB_Threshold(bgr):
-#     b = float(bgr[0])
-#     g = float(bgr[1])
-#     r = float(bgr[2])
+def RGB_Threshold(bgr):
+    b = float(bgr[0])
+    g = float(bgr[1])
+    r = float(bgr[2])
 
-#     E1 = ? # add eqquaintion in paper 
-#     E2 = ? # add eqquaintion in paper 
+    max_value = np.max(np.array([r, g, b]))
+    min_value = np.min(np.array([r, g, b]))
 
-#     return E1 or E2
+    E1 = r > 95 and g > 40 and b > 20 and abs(r - g) > 15 and r > g and r > b and (max_value - min_value) > 15
+    E2 = r > 220 and g > 210 and b > 170 and abs(r - g) <= 15 and r > b and g > b
 
-# def YCrCb_Threshold(yCrCb):
-#     y = float(yCrCb[0])
-#     Cr = float(yCrCb[1])
-#     Cb = float(yCrCb[2])
+    return E1 or E2
 
-#     E1 = ? # add eqquaintion in paper 
-#     E2 = ? # add eqquaintion in paper 
-#     E3 = ? # add eqquaintion in paper 
-#     E4 = ? # add eqquaintion in paper 
-#     E5 = ? # add eqquaintion in paper 
-
-#     return E1 and E2 and E3 and E4 and E5
-
-# def HSV_Threshold(hsv):
-#     return ? ? # add eqquaintion in paper 
+def HSV_Threshold(hsv):
+    h = (float(hsv[0])/100) * 360 # Normalizado para 0-360
+    s = float(hsv[1]) / 100 # Normalizado para 0-1
+    v = float(hsv[2]) / 100 # Normalizado para 0-1
+    
+    return 0 <= h and h <= 50 and 0.23 <= s <= 0.68
 
 def Threshold(bgra, hsv, yCrCb):
     b = float(bgra[0])
@@ -68,6 +62,16 @@ def SkinSegmentation(img, imgNameOut="out.png"):
 
     for i in tqdm(range(img.shape[0])):
         for j in range(img.shape[1]):
+            # if (not RGB_Threshold(bgra[i, j])):
+            #     result[i, j, 0] = 0
+            #     result[i, j, 1] = 0
+            #     result[i, j, 2] = 0
+                
+            # if (not HSV_Threshold(hsv[i, j])):
+            #     result[i, j, 0] = 0
+            #     result[i, j, 1] = 0
+            #     result[i, j, 2] = 0
+
             if (not Threshold(bgra[i, j], hsv[i, j], yCrCb[i, j])):
                 result[i, j, 0] = 0
                 result[i, j, 1] = 0
